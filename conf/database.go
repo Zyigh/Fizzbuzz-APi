@@ -2,7 +2,7 @@ package conf
 
 const (
 	// DBHost Database Host
-	DBHost 		  = "zyigh.com"
+	DBHost 		  = "couchdb"
 	// DBPassword Database Password
 	DBPassword 	  = "password"
 	// DBPort Database Port

@@ -48,11 +48,11 @@ func (r *Request) Save() error {
 }
 
 // FindMostAskedRequest returns the most requested parameters for FizzBuzz
-func (r Request) FindMostAskedRequest() (*Request, error) {
+func (r Request) FindMostAskedRequest() (*Request, *int, error) {
 	raw, err := r.getData(databaseName, "/_all_docs?include_docs=true")
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return nil, nil, err
 	}
 
 	var requests struct{
@@ -72,7 +72,7 @@ func (r Request) FindMostAskedRequest() (*Request, error) {
 
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return nil, nil, err
 	}
 
 	mostAsked := &Request{}
@@ -101,7 +101,7 @@ func (r Request) FindMostAskedRequest() (*Request, error) {
 					mostAsked.Str1  = doc.Str1
 					mostAsked.Str2  = doc.Str2
 				}
-
+				maxOccurence = grouped[i].count
 				docExistsInGroup = true
 				break
 			}
@@ -116,7 +116,7 @@ func (r Request) FindMostAskedRequest() (*Request, error) {
 		}
 	}
 
-	return mostAsked, nil
+	return mostAsked, &maxOccurence, nil
 }
 
 // NewRequest creates a new instance of Request without ID and Rev
