@@ -1,0 +1,6 @@
+.DS_STORE
+.idea
+.docker/couchdb/data
+
+fizzbuzz
+*.pem

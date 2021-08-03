@@ -1,0 +1,26 @@
+version: "3"
+
+networks:
+  fizzbuzz:
+
+services:
+  couchdb:
+    image: "couchdb:3.1.1"
+    volumes:
+      - ".docker/couchdb/data:/opt/couchdb/data"
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=password
+    restart: always
+    networks:
+      fizzbuzz:
+
+  fizzbuzz:
+    build: .
+    ports:
+      - "8787:443"
+    links:
+      - couchdb
+    restart: always
+    networks:
+      fizzbuzz:
